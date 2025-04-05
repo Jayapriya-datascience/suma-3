@@ -29,16 +29,16 @@ st.markdown(multi_color_blink_css, unsafe_allow_html=True)
 model_path = os.path.join("model8", "trained_model8.pkl")
 scaler_path = os.path.join("model8", "scaler8.pkl")
 
-if not os.path.exists(model_path):
-    st.error(f"❌ Model file not found! Expected at: {model_path}")
-    st.stop()
 
-if not os.path.exists(scaler_path):
-    st.error(f"❌ Scaler file not found! Expected at: {scaler_path}")
-    st.stop()
 
-with open(model_path, "rb") as model_file:
-    model = pickle.load(model_file)
+model_path = "sleep_model.pkl"
+
+if os.path.exists(model_path):
+    with open(model_path, "rb") as model_file:
+        model = pickle.load(model_file)
+else:
+    st.error("Model file not found! Please make sure 'sleep_model.pkl' is in the same folder as this app.")
+    st.stop()
 
 import joblib  # Use joblib instead of pickle for loading scaler
 
@@ -325,13 +325,3 @@ if "possible_disorders" in st.session_state and st.session_state.possible_disord
             file_name="Sleep_Disorder_Report.pdf", 
             mime="application/pdf"
         )
-
-model_path = "sleep_model.pkl"
-
-if os.path.exists(model_path):
-    with open(model_path, "rb") as model_file:
-        model = pickle.load(model_file)
-else:
-    st.error("Model file not found! Please make sure 'sleep_model.pkl' is in the same folder as this app.")
-    st.stop()
-        
