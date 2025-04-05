@@ -314,6 +314,7 @@ def generate_pdf(disorders):
     c.save()
     return pdf_path
 
+
 if "possible_disorders" in st.session_state and st.session_state.possible_disorders:
     pdf_file = generate_pdf(st.session_state.possible_disorders)
     
@@ -325,4 +326,12 @@ if "possible_disorders" in st.session_state and st.session_state.possible_disord
             mime="application/pdf"
         )
 
+model_path = "sleep_model.pkl"
+
+if os.path.exists(model_path):
+    with open(model_path, "rb") as model_file:
+        model = pickle.load(model_file)
+else:
+    st.error("Model file not found! Please make sure 'sleep_model.pkl' is in the same folder as this app.")
+    st.stop()
         
